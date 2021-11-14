@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blog-back
+  labels:
+    app: blog-back
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: blog-back
+  template:
+    metadata:
+      labels:
+        app: blog-back
+    spec:
+      containers:
+      - name: blog-back
+        image: khalil4/blogback:v1
+      
+        ports:
+        - containerPort: 80
+        env:
+        - name: DB_HOST
+          valueFrom:
+            secretKeyRef:
+              name: mysql-configmap
+              key: database_url
+        - name: DB_DATABASE
+          valueFrom: 
+            configMapKeyRef:
+              name: mysql-configmap
+              key: database_name
+        - name: DB_USERNAME
+          valueFrom: 
+            secretKeyRef:
+              name: mysql-secret
+              key: mysql-root-username
+        - name: DB_PASSWORD
+          valueFrom: 
+            secretKeyRef:
+              name: mysql-secret
+              key: mysql-root-password  
+                 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: blog-back-service
+spec:
+  selector:
+    app: blog-back
+  type: LoadBalancer  
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30000

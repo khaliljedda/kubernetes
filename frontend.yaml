@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blog-front
+  labels:
+    app: blog-front
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: blog-front
+  template:
+    metadata:
+      labels:
+        app: blog-front
+    spec:
+      containers:
+      - name: blog-front
+        image: khalil4/blogfront
+      
+        ports:
+        - containerPort: 80
+        env:
+        - name: DB_HOST
+          valueFrom:
+            secretKeyRef:
+              name: mysql-configmap
+              key: database_url
+        - name: DB_DATABASE
+         
+             
+                 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: blog-front-service
+spec:
+  selector:
+    app: blog-front
+  type: LoadBalancer  
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30007

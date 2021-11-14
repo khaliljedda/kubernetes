@@ -1,0 +1,15 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-laravel
+spec:
+  rules:
+    - host: devops-internership.com
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: blog-back-service               
+              servicePort: 30000
+
+
