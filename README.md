@@ -1,4 +1,4 @@
-readme
+![Alt text](https://www.github.com/khaliljedda/kubernetes/k8s.jpg?raw=true "Kubernetes Architecture")
 ### kubectl apply commands in order
     
     kubectl -- apply -f mysql.yaml
