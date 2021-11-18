@@ -1,3 +1,4 @@
+readme
 ### kubectl apply commands in order
     
     kubectl -- apply -f mysql.yaml

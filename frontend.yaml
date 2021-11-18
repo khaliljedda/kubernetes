@@ -16,8 +16,7 @@ spec:
     spec:
       containers:
       - name: blog-front
-        image: khalil4/blogfront
-      
+        image: khalil4/blogfront:V1
         ports:
         - containerPort: 80
         env:
